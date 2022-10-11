@@ -33,6 +33,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.playing = False
 
+
     def update(self):
         key_pressed = pygame.key.get_pressed()
         self.player.update(key_pressed)
@@ -52,6 +53,6 @@ class Game:
         self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
         if self.x_pos_bg <= -image_width:
-            self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
+            self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
         self.x_pos_bg -= self.game_speed
