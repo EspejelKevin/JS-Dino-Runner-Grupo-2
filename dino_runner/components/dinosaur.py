@@ -13,9 +13,9 @@ class Dinosaur(Sprite):
     def __init__(self):
         self.image = RUNNING[0]
         self.step_index = 0
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS
+        self.rect = self.image.get_rect()
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
         self.jump_velocity = self.JUMP_VELOCITY
         self.is_running = True
         self.is_jumping = False
@@ -48,20 +48,20 @@ class Dinosaur(Sprite):
         
 
     def draw(self, screen):
-        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 
     
     def run(self):
         self.image = RUNNING[self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS
+        self.rect = self.image.get_rect()
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
         self.step_index += 1
 
     
     def jump(self):
         self.image = JUMPING
-        self.dino_rect.y -= self.jump_velocity * 4
+        self.rect.y -= self.jump_velocity * 4
         self.jump_velocity -= 0.8
 
         if self.jump_velocity < -self.JUMP_VELOCITY:
@@ -71,7 +71,7 @@ class Dinosaur(Sprite):
     
     def duck(self):
         self.image = DUCKING[self.step_index // 5]
-        self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
-        self.dino_rect.y = self.Y_POS_DUCK
+        self.rect = self.image.get_rect()
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS_DUCK
         self.step_index += 1
