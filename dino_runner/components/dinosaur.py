@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import JUMPING, RUNNING, DUCKING
+from dino_runner.utils.constants import JUMPING, RUNNING, DUCKING, SOUNDS_DIR
 import pygame
+import os
 
 
 class Dinosaur(Sprite):
@@ -34,6 +35,8 @@ class Dinosaur(Sprite):
             self.step_index = 0
 
         if key_pressed[pygame.K_UP] and not self.is_jumping:
+            sound_jump = pygame.mixer.Sound(os.path.join(SOUNDS_DIR, "jump.ogg"))
+            sound_jump.play()
             self.is_jumping = True
             self.is_ducking = False
             self.is_running = False
