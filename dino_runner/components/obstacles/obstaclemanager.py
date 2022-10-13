@@ -19,12 +19,13 @@ class ObstacleManager:
             elif number_random == 1:
                 self.obstacles.append(Cactus(images=LARGE_CACTUS, value_y=300))
             else:
-                self.obstacles.append(Bird(BIRD))
+                self.obstacles.append(Bird(images=BIRD))
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.rect.colliderect(obstacle.rect):
                 pygame.time.delay(300)
+                game.death_count += 1
                 game.playing = False
                 break
 
@@ -32,3 +33,7 @@ class ObstacleManager:
     def draw(self, game):
         for obstacle in self.obstacles:
             obstacle.draw(game.screen)
+
+    
+    def reset_obstacles(self):
+        self.obstacles = []
