@@ -30,10 +30,8 @@ class Dinosaur(Sprite):
             self.run()
         if self.is_jumping:
             self.jump()
-
         if self.step_index >= 10:
             self.step_index = 0
-
         if key_pressed[pygame.K_UP] and not self.is_jumping:
             sound_jump = pygame.mixer.Sound(os.path.join(SOUNDS_DIR, "jump.ogg"))
             sound_jump.play()

@@ -1,7 +1,8 @@
+from dino_runner.components.cloud import Cloud
 from dino_runner.components.score import Score
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstaclemanager import ObstacleManager
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DINO_START, FONT
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DINO_START, FONT, DINO_DEAD
 import pygame
 
 
@@ -22,6 +23,7 @@ class Game:
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.score = Score()
+        self.cloud = Cloud()
 
 
     def execute(self):
@@ -56,6 +58,7 @@ class Game:
         self.player.update(key_pressed)
         self.obstacle_manager.update(self)
         self.score.update(self)
+        self.cloud.update(self.game_speed)
 
 
     def draw(self):
@@ -65,6 +68,7 @@ class Game:
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self)
         self.score.draw(self.screen)
+        self.cloud.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -87,15 +91,11 @@ class Game:
 
         font = pygame.font.Font(FONT, 30)
         
-        text = self.status_game(font)
+        text = self.status_game(font, pos_center_x, pos_center_y)
         
         text_rect = text.get_rect()
         text_rect.center = (pos_center_x, pos_center_y)
         self.screen.blit(text, text_rect)
-
-        dino_rect = DINO_START.get_rect()
-        dino_rect.center = (pos_center_x, pos_center_y - 80)
-        self.screen.blit(DINO_START, dino_rect)
 
         pygame.display.update()
 
@@ -110,10 +110,16 @@ class Game:
                 self.run()
 
     
-    def status_game(self, font):
+    def status_game(self, font, pos_x, pos_y):
         if self.death_count == 0:
+            dino_rect = DINO_START.get_rect()
+            dino_rect.center = (pos_x, pos_y - 80)
+            self.screen.blit(DINO_START, dino_rect)
             text = font.render("Press ENTER to start", True, (0, 0, 0))
         else:
+            dino_rect = DINO_DEAD.get_rect()
+            dino_rect.center = (pos_x, pos_y - 80)
+            self.screen.blit(DINO_DEAD, dino_rect)
             text = font.render("Press ENTER to Restart", True, (0, 0, 0))
             score = font.render(f"Your Score: {self.score.score}", True, (0, 0, 0))
             score_rect = score.get_rect()

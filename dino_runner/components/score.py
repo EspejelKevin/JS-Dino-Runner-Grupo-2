@@ -1,6 +1,7 @@
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import FONT
+from dino_runner.utils.constants import FONT, SOUNDS_DIR
 import pygame
+import os
 
 
 class Score(Sprite):
@@ -11,7 +12,9 @@ class Score(Sprite):
 
     def update(self, game):
         self.score += 1
-        if self.score % 100 == 0:
+        if self.score % 500 == 0:
+            sound_jump = pygame.mixer.Sound(os.path.join(SOUNDS_DIR, "point.ogg"))
+            sound_jump.play()
             game.game_speed += 3
 
 

@@ -1,8 +1,9 @@
-from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
+from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD, SOUNDS_DIR
 from .cactus import Cactus
 from .bird import Bird
 import random
 import pygame
+import os
 
 
 class ObstacleManager:
@@ -24,6 +25,8 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.rect.colliderect(obstacle.rect):
+                sound_jump = pygame.mixer.Sound(os.path.join(SOUNDS_DIR, "die.ogg"))
+                sound_jump.play()
                 pygame.time.delay(300)
                 game.death_count += 1
                 game.playing = False
